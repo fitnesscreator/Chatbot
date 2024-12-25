@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Chat</title>
+    <style>
+        /* Reset styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Full-screen layout */
+        html, body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #000, #1a1a1a);
+            color: #fff;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Header section */
+        #chat-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: #111;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        #chat-header img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        #chat-header h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        #chat-header p {
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        /* Go to Website button */
+        #go-to-website {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            font-size: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 25px;
+            background: transparent;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        #go-to-website:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        #go-to-website:active {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Chatbox */
+        #chat-box {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            scrollbar-width: thin; /* For Firefox */
+            scrollbar-color: #ff616f #333;
+            padding-bottom: 100px; /* Reserve space for typing bar */
+        }
+
+        #chat-box::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #chat-box::-webkit-scrollbar-thumb {
+            background: linear-gradient(90deg, #ec3642, #ff616f);
+            border-radius: 10px;
+        }
+
+        #chat-box::-webkit-scrollbar-track {
+            background: #333;
+            border-radius: 10px;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 15px 20px;
+            border-radius: 20px;
+            line-height: 1.5;
+            font-size: 16px;
+            word-wrap: break-word;
+            position: relative;
+        }
+
+        .bot-message {
+            background: linear-gradient(90deg, #ec3642, #ff616f);
+            color: #fff;
+            align-self: flex-start;
+            margin-left: 25%; /* Pull closer to center */
+        }
+
+        .user-message {
+            background: #333;
+            color: #fff;
+            align-self: flex-end;
+            margin-right: 25%; /* Pull closer to center */
+        }
+
+        /* Typing animation */
+        .typing {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-left: 25%; /* Align typing animation closer to center */
+        }
+
+        .typing span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #ec3642;
+            border-radius: 50%;
+            animation: typing 1.5s infinite;
+        }
+
+        .typing span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 80%, 100% {
+                opacity: 0;
+            }
+            40% {
+                opacity: 1;
+            }
+        }
+
+        /* Typing bar */
+        #user-input-container {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #111;
+            border-radius: 50px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 800px;
+        }
+
+        #user-input {
+            flex: 1;
+            padding: 15px;
+            font-size: 16px;
+            border: none;
+            outline: none;
+            border-radius: 25px;
+            background: #333;
+            color: #fff;
+        }
+
+        #send-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            outline: none;
+            background: linear-gradient(90deg, #ec3642, #ff616f);
+            color: #fff;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        #send-btn:hover {
+            transform: scale(1.05);
+        }
+
+        #send-btn:active {
+            transform: scale(1);
+        }
+      
+      /* Media query for screens up to 768px (common for phones) */
+@media (max-width: 768px) {
+    /* Adjust the chat header */
+    #chat-header {
+        padding: 15px;
+    }
+
+    #chat-header img {
+        width: 60px;
+        height: 60px;
+    }
+
+    #chat-header h1 {
+        font-size: 18px;
+    }
+
+    #chat-header p {
+        font-size: 12px;
+    }
+
+    #go-to-website {
+        top: 10px;
+        right: 10px;
+        font-size: 12px;
+        padding: 8px 15px;
+    }
+
+    /* Adjust the chat box */
+    #chat-box {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .message {
+        font-size: 14px;
+        padding: 10px 15px;
+        border-radius: 15px;
+        max-width: 90%; /* Increase message width */
+    }
+
+    .bot-message {
+        margin-left: 5%; /* Adjust margins for larger width */
+    }
+
+    .user-message {
+        margin-right: 5%; /* Adjust margins for larger width */
+    }
+
+    /* Typing animation */
+    .typing {
+        gap: 3px;
+        margin-left: 5%;
+    }
+
+    .typing span {
+        width: 6px;
+        height: 6px;
+    }
+
+    /* Typing bar */
+    #user-input-container {
+        width: 95%;
+        padding: 8px;
+        gap: 8px;
+    }
+
+    #user-input {
+        padding: 10px;
+        font-size: 14px;
+        /* Prevent zoom on input */
+        font-size: 16px;
+    }
+
+    #send-btn {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <!-- Chat header -->
+    <div id="chat-header">
+        <img src="https://i.ibb.co/pj0zfPC/Elite-1.png" alt="Jake's Picture" />
+        <h1>Jake, Your Fitness Coach</h1>
+        <p>Helping you transform your life one step at a time</p>
+        <button id="go-to-website" onclick="window.location.href='https://example.com';">Go to Website</button>
+    </div>
+
+    <!-- Chat box -->
+    <div id="chat-box"></div>
+
+    <!-- Typing bar -->
+    <div id="user-input-container">
+        <input type="text" id="user-input" placeholder="Type your response..." />
+        <button id="send-btn">Send</button>
+    </div>
+
+    <script src="https://unpkg.com/compromise"></script>
+<script>
+    const chatBox = document.getElementById('chat-box');
+    const userInput = document.getElementById('user-input');
+    const sendBtn = document.getElementById('send-btn');
+    const body = document.body;
+
+    let userName = '';
+    let currentMessageIndex = 0;
+    let potentialNames = [];
+
+    const chatMessages = [
+        "Hi, I'm Jake. What's your name?",
+        "Nice to meet you, [Name]! What is your primary fitness goal? (e.g., lose weight, gain muscle, improve endurance, or something else?)",
+        "Incredible. Every step you take counts. Are you ready to see how I can help?"
+    ];
+
+    // Scroll the chatbox to ensure the last message is visible right above the typing bar
+    function scrollToLastMessage() {
+        chatBox.scrollTop = chatBox.scrollHeight; // Ensure visibility above the typing bar
+    }
+
+    // Add typing animation
+    function addTypingAnimation() {
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'typing';
+        typingDiv.innerHTML = `
+            <span></span>
+            <span></span>
+            <span></span>
+        `;
+        chatBox.appendChild(typingDiv);
+        scrollToLastMessage(); // Ensure typing animation is visible
+        return typingDiv;
+    }
+
+    // Add messages to the chat with typing animation
+    function typeMessage(sender, text, callback) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `${sender}-message message`;
+
+        // Replace placeholder [Name] with the user's name if available
+        const messageText = text.replace('[Name]', userName);
+
+        chatBox.appendChild(messageDiv);
+
+        let index = 0;
+        const interval = setInterval(() => {
+            if (index < messageText.length) {
+                messageDiv.textContent += messageText[index];
+                index++;
+                scrollToLastMessage(); // Ensure the message is fully visible
+            } else {
+                clearInterval(interval);
+                if (callback) callback();
+            }
+        }, 50);
+    }
+
+    // Predict the user's name from their input using Compromise.js
+    function extractName(input) {
+        const doc = nlp(input); // Parse input using Compromise.js
+        const people = doc.people().out('array'); // Extract names
+
+        if (people.length > 0) {
+            return people; // Return array of names
+        }
+
+        // Fallback for single capitalized word (if NER fails)
+        const singleWordMatch = input.match(/^[A-Z][a-z]+$/);
+        if (singleWordMatch) {
+            return [singleWordMatch[0]]; // Return single capitalized word
+        }
+
+        return null; // No name found
+    }
+
+    // Handle name confirmation
+    function confirmName(names) {
+        if (names.length === 1) {
+            userName = names[0];
+            typeMessage('bot', `Nice to meet you, ${userName}! What is your primary fitness goal?`, () => {
+                currentMessageIndex++;
+            });
+        } else {
+            const options = names.map((name, index) => `${index + 1}. ${name}`).join('\n');
+            typeMessage('bot', `I found multiple possible names: \n${options}\nPlease type your name only.`, () => {
+                scrollToLastMessage();
+            });
+        }
+    }
+
+            // Handle user input
+    function handleUserResponse(userMessage) {
+        if (currentMessageIndex === 0) {
+            const potentialMatches = extractName(userMessage);
+
+            if (potentialMatches) {
+                potentialNames = potentialMatches;
+                confirmName(potentialNames);
+            } else {
+                // Treat the input as a standalone name (e.g., "John")
+                userName = userMessage.split(" ")[0]; // Take the first word
+                typeMessage('bot', `Nice to meet you, ${userName}! What is your primary fitness goal?`, () => {
+                    currentMessageIndex++;
+                });
+            }
+        } else if (currentMessageIndex === 1 && !userName) {
+            const selectedNumber = parseInt(userMessage, 10);
+            if (selectedNumber && selectedNumber > 0 && selectedNumber <= potentialNames.length) {
+                userName = potentialNames[selectedNumber - 1];
+                typeMessage('bot', `Nice to meet you, ${userName}! What is your primary fitness goal?`, () => {
+                    currentMessageIndex++;
+                });
+            } else {
+                typeMessage('bot', "Please type a valid number to select your name.", () => {
+                    scrollToLastMessage();
+                });
+            }
+        } else if (currentMessageIndex === 1) {
+            // Proceed with fitness goal
+            typeMessage('bot', "Incredible. Every step you take counts. Are you ready to see how I can help?", () => {
+                currentMessageIndex++;
+            });
+        } else if (currentMessageIndex === 2) {
+            // Always trigger welcome animation regardless of response
+            showWelcomeMessage(userName);
+        }
+    }
+
+    // Fade out the page and display the welcome message
+function showWelcomeMessage(name) {
+    // Create a fade-out effect
+    body.style.transition = 'opacity 0.5s ease';
+    body.style.opacity = 0;
+
+    // After fade-out, show the welcome message with animation
+    setTimeout(() => {
+        body.innerHTML = `
+            <div style="display: flex; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(to bottom, #000, #1a1a1a); color: #fff; font-size: 32px; font-weight: bold; animation: fadeIn 2s ease-in-out;">
+                Welcome ${name}
+            </div>
+            <style>
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+            </style>
+        `;
+        body.style.opacity = 1; // Fade in the new content
+
+        // Redirect to main.html after 2 seconds
+        setTimeout(() => {
+            window.location.href = 'main.html';
+        }, 2000);
+    }, 500);
+}
+
+
+
+
+    // Show initial message with typing effect
+    window.addEventListener('DOMContentLoaded', () => {
+        typeMessage('bot', chatMessages[currentMessageIndex], () => {
+            scrollToLastMessage();
+        });
+    });
+
+    // Handle send button click
+    sendBtn.addEventListener('click', () => {
+        const userMessage = userInput.value.trim();
+        if (!userMessage) return;
+
+        // Add the user's message
+        const userMessageDiv = document.createElement('div');
+        userMessageDiv.className = 'user-message message';
+        userMessageDiv.textContent = userMessage;
+        chatBox.appendChild(userMessageDiv);
+        scrollToLastMessage(); // Scroll to the last message
+
+        userInput.value = '';
+
+        const typingDiv = addTypingAnimation();
+        setTimeout(() => {
+            typingDiv.remove();
+            handleUserResponse(userMessage);
+        }, 1000); // Simulate bot thinking
+    });
+</script>
+
+</body>
+</html>
