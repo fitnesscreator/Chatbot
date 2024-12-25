@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Coach Header</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Style */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+        }
+
+        /* Header Section */
+        .header {
+            position: relative;
+            background: url('https://i.ibb.co/xKkKNzw/Untitled-design-24.png') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Black Fade Overlay */
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: absolute;
+            top: 20px;
+            display: flex;
+            gap: 40px;
+            z-index: 2;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 2px solid #ec3642;
+            border-radius: 30px;
+            background-color: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .navbar a:hover {
+            background-color: rgba(236, 54, 66, 0.2);
+            transform: scale(1.05);
+        }
+
+        /* Content */
+        .content {
+            position: relative;
+            z-index: 2;
+            color: #fff;
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+            margin-left: 200px;
+        }
+
+        .content h1 {
+            font-size: 100px;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        .content h1 span {
+            display: block;
+        }
+
+        .content p {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+
+        /* CTA Button */
+        .cta-btn {
+            padding: 15px 30px;
+            background-color: #ec3642;
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .cta-btn:hover {
+            background-color: #bf2b36;
+        }
+
+        /* Quote Section */
+        .quote-section {
+            background: linear-gradient(90deg, #ec3642, #ff616f);
+            color: #fff;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 28px;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .quote-text {
+            display: inline-block;
+            position: relative;
+        }
+
+        .quote-text::before,
+        .quote-text::after {
+            content: '"';
+            font-size: 48px;
+            color: rgba(255, 255, 255, 0.3);
+            position: absolute;
+            top: -10px;
+        }
+
+        .quote-text::before {
+            left: -25px;
+        }
+
+        .quote-text::after {
+            right: -25px;
+        }
+
+        /* About Section */
+        .about-section {
+            display: flex;
+            align-items: center;
+            padding: 60px 40px;
+            background-color: #1a1a1a;
+            color: #fff;
+        }
+
+        .about-section .image-container {
+    flex: 1;
+    background: url('https://i.ibb.co/SJpVJ0q/B-2024-11-01-T165513-067.png') no-repeat center center/cover;
+    height: 400px;
+    border-radius: 50px; /* Adjust the radius value for more or less rounding */
+    overflow: hidden; /* Ensures the image content stays within the rounded corners */
+}
+
+        .about-section .text-container {
+            flex: 1;
+            padding: 0 40px;
+            position: relative;
+        }
+
+        .about-section h2 {
+            font-size: 24px;
+            color: #a0a0a0;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .about-section h1 {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .about-section p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #d1d1d1;
+            margin-bottom: 20px;
+        }
+
+        /* Tags Container */
+.tags-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+/* Individual Tag */
+.tag {
+    padding: 10px 20px;
+    border: 2px solid transparent;
+    border-radius: 30px;
+    background: linear-gradient(90deg, #ec3642, #ff616f);
+    background-clip: padding-box;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Adding the rotating gradient border effect */
+.tag::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    z-index: -1;
+    background: linear-gradient(90deg, #ec3642, #ff616f, #ec3642);
+    border-radius: 30px;
+    animation: rotateGradient 5s linear infinite;
+}
+
+/* Keyframes for the rotating gradient border */
+@keyframes rotateGradient {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+      
+      /* Services Section */
+        .services-section {
+            position: relative;
+            background: url('https://i.ibb.co/hVHMRGr/Untitled-design-25.png') no-repeat center center/cover;
+            color: #fff;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        /* Fade overlay */
+        .services-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        .services-section h2 {
+            font-size: 40px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .services-section p.subtitle {
+            font-size: 18px;
+            color: #d1d1d1;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .services-container {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            position: relative;
+            z-index: 2;
+            flex-wrap: wrap;
+        }
+
+        .service {
+            max-width: 250px;
+            text-align: center;
+        }
+
+        .service img {
+            width: 70px;
+            height: 70px;
+            margin-bottom: 20px;
+        }
+
+        .service h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .service p {
+            font-size: 16px;
+            color: #d1d1d1;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+      
+      /* Customer Reviews Section */
+        .reviews-section {
+            position: relative;
+            background: url('https://i.ibb.co/WBLX5b5/Untitled-design-26.png') no-repeat center center/cover;
+            color: #fff;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        /* Overlay */
+        .reviews-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(236, 54, 66, 0.85); /* Overlay color with slight transparency */
+            z-index: 1;
+        }
+
+        .reviews-section h2 {
+            font-size: 36px;
+            font-weight: 900;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+            text-transform: uppercase;
+        }
+
+        .review-container {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .review {
+            font-size: 20px;
+            font-style: italic;
+            color: #fff;
+            text-align: center;
+            line-height: 1.6;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .review-name {
+            font-weight: bold;
+            font-size: 15px;
+            margin-top: 10px;
+            display: block;
+            color: #ffd1d1;
+            text-transform: uppercase;
+        }
+
+        /* Separator Line */
+        .separator {
+            width: 50%;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.5);
+            margin: 20px auto;
+        }
+      
+      /* Contact Section */
+        .contact-section {
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 60px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 200px; /* Increased space between left and right sections */
+        }
+
+        /* Contact Details */
+        .contact-details {
+            max-width: 300px;
+        }
+
+        .contact-details h3 {
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .contact-details p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #d1d1d1;
+            margin-bottom: 10px;
+        }
+
+        .social-icons {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons img {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .contact-form h3 {
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            background-color: transparent;
+            color: #fff;
+            border: 1px solid #fff;
+            font-size: 14px;
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: #d1d1d1;
+        }
+
+        .contact-form textarea {
+            height: 120px;
+            resize: none;
+        }
+
+        .contact-form button {
+            padding: 10px 20px;
+            background-color: #ec3642;
+            color: #fff;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .contact-form button:hover {
+            background-color: #bf2b36;
+        }
+
+      /* Footer */
+.footer {
+    background-color: #1a1a1a; /* Consistent background color */
+    color: #d1d1d1;
+    font-size: 12px;
+    padding: 20px 0; /* Padding for spacing within the footer */
+    text-align: center;
+    margin-top: 0; /* Ensure no extra space above the footer */
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle top border */
+}
+
+.footer p {
+    margin: 0;
+}
+      
+      @media (max-width: 768px) {
+    body {
+        overflow-x: hidden; /* Prevent horizontal scrolling */
+    }
+        
+        .header {
+        height: 85vh; /* Reduce height from 100vh to 80vh */
+    }
+        /* Hide desktop navigation */
+    .navbar {
+        display: none; /* Hide by default */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.95);
+        z-index: 10;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .navbar.active {
+        display: flex;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .navbar a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 24px;
+        font-weight: bold;
+        margin: 10px 0;
+        text-transform: uppercase;
+        transition: color 0.3s ease;
+    }
+
+    .navbar a:hover {
+        color: #ec3642;
+    }
+
+    /* Burger Menu */
+    .burger-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 20px;
+        position: absolute;
+        top: 20px;
+        left: 20px; /* Positioned on the left */
+        cursor: pointer;
+        z-index: 15;
+    }
+
+    .burger-menu div {
+        width: 100%;
+        height: 4px;
+        background-color: #fff;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+    }
+
+    /* Burger Menu Animation */
+    .burger-menu.active div:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .burger-menu.active div:nth-child(2) {
+        opacity: 0;
+    }
+
+    .burger-menu.active div:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* Header Content */
+    .content {
+        margin: 0;
+        text-align: left; /* Align content to the left */
+        padding: 0; /* Remove padding */
+        max-width: 100%; /* Ensure it doesn't exceed the viewport */
+        transform: translateX(-60px); /* Align the left edge with the burger menu */
+    }
+
+    .content h1 {
+        font-size: 60px;
+        line-height: 1.2; /* Adjust line height for better spacing */
+    }
+
+    .content p {
+        font-size: 16px;
+        margin-top: 10px; /* Add spacing between heading and text */
+    }
+
+    .cta-btn {
+        margin-top: 15px; /* Add space above the button */
+        padding: 10px 20px;
+        font-size: 20px;
+        text-align: center; /* Ensure the button text stays centered */
+    }
+
+    /* Navbar */
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+        padding: 10px 0; /* Add padding to prevent overlapping */
+        max-width: 100%;
+        text-align: center;
+    }
+        
+        /* Quote Section */
+    .quote-section {
+        font-size: 16px !important; /* Force the font size to apply */
+        padding: 10px 15px;
+        text-align: center;
+        line-height: 1.5;
+    }
+
+    .quote-text {
+        font-size: 15px !important; /* Force font size for the text */
+        max-width: 90%;
+        margin: 0 auto;
+        word-wrap: break-word;
+    }
+
+    .quote-text::before,
+    .quote-text::after {
+        font-size: 36px !important; /* Force size of quotation marks */
+        top: -5px;
+    }
+
+    /* About Section */
+    .about-section {
+        flex-direction: column;
+        padding: 20px 15px;
+        gap: 20px;
+    }
+
+    .about-section .image-container {
+        height: 200px; /* Reduce height for smaller screens */
+    }
+
+    .about-section .text-container {
+        padding: 0 10px;
+        text-align: center; /* Center align text */
+    }
+
+    /* Quote Section */
+    .quote-section {
+        font-size: 18px;
+        padding: 15px;
+        text-align: center;
+    }
+
+    /* Services Section */
+    .services-section h2 {
+        font-size: 24px;
+    }
+
+    .services-section p.subtitle {
+        font-size: 14px;
+        padding: 0 15px; /* Prevent text from overflowing */
+    }
+
+    .services-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .service {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .service img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .service h3 {
+        font-size: 18px;
+    }
+
+    .service p {
+        font-size: 14px;
+    }
+
+    /* Contact Section */
+    .contact-section {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px 15px;
+    }
+
+    .contact-details,
+    .contact-form {
+        max-width: 100%;
+        padding: 0 15px; /* Prevent elements from exceeding the screen */
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        font-size: 14px;
+    }
+
+    .contact-form button {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+
+    /* Footer */
+    .footer {
+        font-size: 12px;
+        padding: 10px 15px; /* Ensure consistent spacing */
+        text-align: center;
+    }
+}
+
+
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="header" id="home">
+        <!-- Navigation -->
+        <nav class="navbar">
+    <a href="#home" class="nav-link">Home</a>
+    <a href="#about" class="nav-link">About</a>
+    <a href="#services" class="nav-link">Services</a>
+    <a href="#customers" class="nav-link">Customers</a>
+    <a href="#contact" class="nav-link">Contact</a>
+</nav>
+
+        <!-- Main Content -->
+        <div class="content">
+            <h1>
+                <span>LET'S</span>
+                <span>GET</span>
+                <span>MOVING</span>
+            </h1>
+            <p>Michael Ryan - Fitness Coach</p>
+            <a href="#services" class="cta-btn">Book Now</a>
+        </div>
+    </header>
+
+    <!-- Quote Section -->
+    <div class="quote-section">
+        <div class="quote-text">The only bad workout is the one you didn't do</div>
+    </div>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="image-container"></div>
+        <div class="text-container">
+            <h2>About Me</h2>
+            <h1>Michael Ryan</h1>
+            <p>I'm a paragraph. Click here to add your own text and edit me. It's easy. Just click "Edit Text" or double-click me to add your own content and make changes to the font. Feel free to drag and drop me anywhere you like on your page. I'm a great place for you to tell a story and let your users know a little more about you.</p>
+            <p>This is a great space to write long text about your company and your services. You can use this space to go into a little more detail about your company.</p>
+            
+            <!-- Tags Container -->
+            <div class="tags-container">
+                <span class="tag">Strength Training</span>
+                <span class="tag">Cardio</span>
+                <span class="tag">Weight Loss</span>
+                <span class="tag">Nutrition</span>
+                <span class="tag">Wellness</span>
+            </div>
+        </div>
+    </section>
+  
+  <!-- Services Section -->
+    <section class="services-section" id="services">
+        <!-- Overlay Effect -->
+        <div class="overlay"></div>
+
+        <!-- Title and Subtitle -->
+        <h2>My Signature Programs</h2>
+        <p class="subtitle">I offer personalized programs that transform both body and mind, empowering you to reach your fullest potential and maintain a healthier lifestyle.</p>
+
+        <!-- Services Container -->
+        <div class="services-container">
+            <!-- Personal Training Service -->
+            <div class="service">
+                <img src="https://i.ibb.co/PQg9MSX/B-2024-11-01-T164403-572.png" alt="Personal Training Icon">
+                <h3>Personal Training</h3>
+                <p>Get one-on-one coaching sessions tailored to your unique goals and fitness level.</p>
+            </div>
+
+            <!-- Weight Loss Service -->
+            <div class="service">
+                <img src="https://i.ibb.co/Zcrq6mL/B-2024-11-01-T164555-814.png" alt="Weight Loss Icon">
+                <h3>Weight Loss</h3>
+                <p>Follow my custom weight loss programs designed to fit your lifestyle and achieve sustainable results.</p>
+            </div>
+
+            <!-- Nutrition Advice Service -->
+            <div class="service">
+                <img src="https://i.ibb.co/vQP9B8C/B-2024-11-01-T164711-485.png" alt="Nutrition Advice Icon">
+                <h3>Nutrition Advice</h3>
+                <p>Receive expert guidance on nutrition to fuel your body and maximize your training results.</p>
+            </div>
+        </div>
+    </section>
+  
+  <!-- Customer Reviews Section -->
+    <section class="reviews-section" id="customers">
+        <h2>Success Stories</h2>
+
+        <div class="review-container">
+            <!-- Review 1 -->
+            <div class="review">
+                "In just 6 months of training with Michael, I lost 38 pounds."
+                <span class="review-name">Jack</span>
+            </div>
+
+            <!-- Separator Line -->
+            <div class="separator"></div>
+
+            <!-- Review 2 -->
+            <div class="review">
+                "Reaching my goal of 22% body fat was so easy with Michael!"
+                <span class="review-name">Carrie</span>
+            </div>
+
+            <!-- Separator Line -->
+            <div class="separator"></div>
+
+            <!-- Review 3 -->
+            <div class="review">
+                "I crossed the finish line on my first marathon!"
+                <span class="review-name">Iris</span>
+            </div>
+        </div>
+    </section>
+  
+  <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <!-- Contact Details -->
+        <div class="contact-details">
+            <h3>Michael Ryan</h3>
+            <p>Fitness Coach</p>
+            <p>Helping individuals achieve their health and fitness goals, one session at a time.</p>
+            <p>Specializing in personalized training, nutrition advice, and performance coaching.</p>
+            <p>Email: info@michaelryanfitness.com</p>
+
+            <!-- Social Media Icons -->
+            <div class="social-icons">
+                <a href="#"><img src="https://i.ibb.co/BNqS98X/B-2024-10-08-T150501-252.png" alt="Instagram"></a>
+                <a href="#"><img src="https://i.ibb.co/xGD7XWF/B-2024-10-08-T150955-335.png" alt="TikTok"></a>
+                <a href="#"><img src="https://i.ibb.co/4M1NYbr/B-2024-10-08-T151101-442.png" alt="YouTube"></a>
+                <a href="#"><img src="https://i.ibb.co/Q8NP74g/B-2024-10-08-T150813-574.png" alt="Facebook"></a>
+                <a href="#"><img src="https://i.ibb.co/cv4QBz6/B-2024-10-08-T150413-245.png" alt="X (formerly Twitter)"></a>
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form">
+            <h3>Get in Touch</h3>
+            <form action="#" method="post">
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="tel" name="phone" placeholder="Phone" required>
+                <textarea name="message" placeholder="Message" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2023 by Michael Ryan Fitness. All rights reserved.</p>
+    </footer>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Check if the screen width is below 768px
+        function isMobile() {
+            return window.innerWidth <= 768;
+        }
+
+        // Add smooth scrolling for navigation links
+        const navbarLinks = document.querySelectorAll(".navbar a.nav-link");
+        navbarLinks.forEach((link) => {
+            link.addEventListener("click", function (event) {
+                event.preventDefault(); // Prevent default anchor behavior
+                const targetId = this.getAttribute("href").substring(1);
+                const targetSection = document.getElementById(targetId);
+
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                    });
+                }
+
+                // Close the menu if on mobile
+                const burgerMenu = document.querySelector(".burger-menu");
+                const navbar = document.querySelector(".navbar");
+                if (burgerMenu && burgerMenu.classList.contains("active")) {
+                    burgerMenu.classList.remove("active");
+                    navbar.classList.remove("active");
+                }
+            });
+        });
+
+        // Add the burger menu functionality
+        function initializeBurgerMenu() {
+            const burgerMenu = document.createElement("div");
+            burgerMenu.className = "burger-menu";
+            burgerMenu.innerHTML = `
+                <div></div>
+                <div></div>
+                <div></div>
+            `;
+            document.body.appendChild(burgerMenu);
+
+            const navbar = document.querySelector(".navbar");
+
+            burgerMenu.addEventListener("click", () => {
+                navbar.classList.toggle("active");
+                burgerMenu.classList.toggle("active");
+            });
+        }
+
+        // Initialize burger menu only if on mobile
+        if (isMobile()) {
+            initializeBurgerMenu();
+        }
+
+        // Reinitialize on resize
+        window.addEventListener("resize", function () {
+            const burgerMenu = document.querySelector(".burger-menu");
+            const navbar = document.querySelector(".navbar");
+
+            if (isMobile()) {
+                if (!burgerMenu) initializeBurgerMenu();
+            } else {
+                if (burgerMenu) {
+                    burgerMenu.remove(); // Remove burger menu on desktop
+                    navbar.classList.remove("active"); // Reset navbar state
+                }
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>
